@@ -17,6 +17,10 @@ class AttributeClassRegistrar
      */
     public function getAllClasses(): array
     {
+        if(empty($this->getAttributeNamespaces)) {
+            return [];
+        }
+
         $classes = [];
         foreach ($this->getAttributeNamespaces as $namespace) {
             $foundClasses = ClassFinder::getClassesInNamespace($namespace, ClassFinder::RECURSIVE_MODE);

@@ -5,10 +5,10 @@ namespace LaravelExportConstants;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
 use LaravelExportConstants\Console\ClearConstantCache;
-use LaravelExportConstants\Generators\ConstantGenerator;
 
 class LaravelExportConstantsServiceProvider extends ServiceProvider
 {
+    private const CONFIG_KEY = 'export-constants';
     /**
      * Bootstrap the application services.
      */
@@ -24,8 +24,8 @@ class LaravelExportConstantsServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/export-constants.php' => config_path('laravel-export-constants.php'),
-            ], 'export-constants');
+                __DIR__ . '/../config/export-constants.php' => config_path(self::CONFIG_KEY . '.php'),
+            ], 'export-constants-config');
 
             // Publishing the views.
             /*$this->publishes([
@@ -61,11 +61,11 @@ class LaravelExportConstantsServiceProvider extends ServiceProvider
     public function register()
     {
         // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__ . '/../config/export-constants.php', 'export-constants.php');
+        $this->mergeConfigFrom(__DIR__ . '/../config/export-constants.php', self::CONFIG_KEY . '.php');
 
         // Register the main class to use with the facade
         $this->app->singleton(AttributeClassRegistrar::class, function ($app) {
-            return new AttributeClassRegistrar(config('export-constants.namespaces'));
+            return new AttributeClassRegistrar(config(self::CONFIG_KEY . '.namespaces'));
         });
         $this->app->singleton('laravel-export-constants', function ($app) {
             return new LaravelExportConstants($app->make(AttributeClassRegistrar::class));
@@ -75,8 +75,6 @@ class LaravelExportConstantsServiceProvider extends ServiceProvider
     protected function registerDirective(BladeCompiler $bladeCompiler)
     {
         $bladeCompiler->directive('constants', function () {
-            dump('regDirDir');
-
             return "<?php echo app('" . LaravelExportConstants::class . "')->generate() ?>";
         });
     }

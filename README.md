@@ -23,8 +23,14 @@ You can install the package via composer:
 composer require jefhar/laravel-export-constants
 ```
 
+Copy the package config to your local config with the publish command:
+
+```bash
+php artisan vendor:publish --tag=export-constants-config
+```
+
 ## Usage
-Add the attribute `#[LaravelExportConstants\Attributes\ExportToJs]` to your public 
+Add the attribute `#[\LaravelExportConstants\Attributes\ExportToJs]` to your public 
 constants and add the blade directive `@constants` to your `app.blade.php` file. Use 
 your PHP constant as normal, and look for your JavaScript constant under the 
 `CONSTANTS` global constant

@@ -34,6 +34,7 @@ class LaravelExportConstants
             <script type="text/javascript">
                 const handler={get(e,r){if("isProxy"===r)return!0;const o=e[r];return void 0!==o?(o.isProxy||"object"!=typeof o||(e[r]=new Proxy(o,handler)),e[r]):void 0},set:(e,r,o)=>!1},
                 CONSTANTS=new Proxy(JSON.parse("$constants"),handler);
+                export default CONSTANTS;
             </script>
             JS;
     }

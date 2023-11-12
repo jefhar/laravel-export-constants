@@ -1,9 +1,17 @@
 <?php
 
-/*
- * You can place your custom package configuration in here.
- */
+
 return [
+    /*
+    |--------------------------------------------------------------------------
+    | Export Constants Defaults
+    |--------------------------------------------------------------------------
+    |
+    | Define the namespace(s) that you wish to search for properly tagged
+    | class constants to be exported to JavaScript.
+    |
+    */
+
     'namespaces' => [
         'App',
         'Tests',
